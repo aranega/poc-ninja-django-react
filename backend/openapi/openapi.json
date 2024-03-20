@@ -1,0 +1,270 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "myapp",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "paths": {
+    "/api/schools": {
+      "get": {
+        "operationId": "get_schools",
+        "summary": "Get Schools",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/School"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      }
+    },
+    "/api/schools/{name}": {
+      "get": {
+        "operationId": "get_school",
+        "summary": "Get School",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/School"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      }
+    },
+    "/api/schools/{name}/students": {
+      "get": {
+        "operationId": "get_school_student",
+        "summary": "Get School Student",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Student"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      }
+    },
+    "/api/students": {
+      "get": {
+        "operationId": "get_students",
+        "summary": "Get Students",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Student"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "students"
+        ]
+      }
+    },
+    "/api/students/{firstName}": {
+      "get": {
+        "operationId": "get_student",
+        "summary": "Get Student",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "firstName",
+            "schema": {
+              "title": "Firstname",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Student"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "students"
+        ]
+      }
+    },
+    "/api/students/{firstName}/school": {
+      "get": {
+        "operationId": "get_student_school",
+        "summary": "Get Student School",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "firstName",
+            "schema": {
+              "title": "Firstname",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Student"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "students"
+        ]
+      }
+    },
+    "/api/generate": {
+      "post": {
+        "operationId": "create_schools",
+        "summary": "Create Schools",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "School": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "students": {
+            "items": {
+              "$ref": "#/components/schemas/Student"
+            },
+            "title": "Students",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "students"
+        ],
+        "title": "School",
+        "type": "object"
+      },
+      "Student": {
+        "properties": {
+          "firstName": {
+            "title": "Firstname",
+            "type": "string"
+          },
+          "lastName": {
+            "title": "Lastname",
+            "type": "string"
+          },
+          "age": {
+            "title": "Age",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "age"
+        ],
+        "title": "Student",
+        "type": "object"
+      }
+    }
+  },
+  "servers": []
+}
