@@ -13,7 +13,7 @@ Create a venv for python/django and install the following dependencies:
 
 ```bash
 # Do it inside your venv
-pip install django django-cors-header django-ninja
+pip install django django-cors-header django-ninja uvicorn
 ```
 
 Then install dependencies for the frontend
@@ -58,7 +58,10 @@ Server:
 ```bash
 # from the repo root
 cd backend
-python manage.py runserver
+uvicorn api.asgi:application
+
+# or, for dev purpose
+uvicorn api.asgi:application --reload
 ```
 
 

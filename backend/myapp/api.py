@@ -1,3 +1,4 @@
+from asgiref.sync import sync_to_async
 from ninja import NinjaAPI, Router
 from .schemas import School, Student
 from .models import School as SchoolModel, Student as StudentModel
@@ -21,6 +22,11 @@ class MyRouter(Router):
 api = MyAppAPI(title="myapp", default_router=MyRouter())
 
 
+@sync_to_async
+def to_list(q):
+    return list(q)
+
+
 @api.get("/schools", response=list[School], tags=["school"])
 def get_schools(request):
     return SchoolModel.objects.all()
@@ -31,10 +37,16 @@ def get_school(request, name: str):
     return SchoolModel.objects.filter(name=name).first()
 
 
+# @api.get("/schools/{name}/students", response=list[Student], tags=["school"])
+# def get_school_student(request, name: str):
+#     return SchoolModel.objects.filter(name=name).first().students
+#     # return StudentModel.objects.filter(school__name=name)  # Otherwise, slightly different
+
+
 @api.get("/schools/{name}/students", response=list[Student], tags=["school"])
-def get_school_student(request, name: str):
-    return SchoolModel.objects.filter(name=name).first().students
-    # return StudentModel.objects.filter(school__name=name)  # Otherwise, slightly different
+async def get_school_student(request, name: str):
+    school = await SchoolModel.objects.filter(name=name).afirst()
+    return await to_list(school.students.all())
 
 
 @api.post("/schools/{schoolName}/students", response=Student, tags=["school"])
