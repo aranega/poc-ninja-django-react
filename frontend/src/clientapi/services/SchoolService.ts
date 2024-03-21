@@ -55,4 +55,26 @@ export class SchoolService {
             },
         });
     }
+    /**
+     * Create Student
+     * @returns Student OK
+     * @throws ApiError
+     */
+    public static createStudent({
+        schoolName,
+        requestBody,
+    }: {
+        schoolName: string,
+        requestBody: Student,
+    }): CancelablePromise<Student> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/schools/{schoolName}/students',
+            path: {
+                'schoolName': schoolName,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
 }

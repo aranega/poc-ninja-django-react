@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { Student } from './Student';
 export type School = {
-    name: string;
     students: Array<Student>;
+    name: string;
 };
 

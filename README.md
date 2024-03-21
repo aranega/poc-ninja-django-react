@@ -60,3 +60,9 @@ Server:
 cd backend
 python manage.py runserver
 ```
+
+
+### Populate the DB
+
+There is a special endpoint to populate the DB with dummy values.
+Go to `http://127.0.0.1:3000/api/docs` and try the `/generate` endpoint.

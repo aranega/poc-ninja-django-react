@@ -107,6 +107,48 @@
         ]
       }
     },
+    "/api/schools/{schoolName}/students": {
+      "post": {
+        "operationId": "create_student",
+        "summary": "Create Student",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "schoolName",
+            "schema": {
+              "title": "Schoolname",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Student"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Student"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
     "/api/students": {
       "get": {
         "operationId": "get_students",
@@ -222,21 +264,22 @@
     "schemas": {
       "School": {
         "properties": {
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
           "students": {
             "items": {
               "$ref": "#/components/schemas/Student"
             },
             "title": "Students",
             "type": "array"
+          },
+          "name": {
+            "maxLength": 255,
+            "title": "Name",
+            "type": "string"
           }
         },
         "required": [
-          "name",
-          "students"
+          "students",
+          "name"
         ],
         "title": "School",
         "type": "object"
@@ -244,11 +287,13 @@
       "Student": {
         "properties": {
           "firstName": {
-            "title": "Firstname",
+            "maxLength": 255,
+            "title": "First Name",
             "type": "string"
           },
           "lastName": {
-            "title": "Lastname",
+            "maxLength": 255,
+            "title": "Last Name",
             "type": "string"
           },
           "age": {
